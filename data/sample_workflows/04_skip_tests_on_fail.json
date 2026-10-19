@@ -1,0 +1,56 @@
+{
+  "name": "Skip Tests on Fail — R09 Test Case",
+  "schema_version": "1.0",
+  "environment": "production",
+  "change_type": "standard",
+  "stages": [
+    {
+      "id": "build",
+      "name": "Build",
+      "type": "build",
+      "owner": "platform-team",
+      "depends_on": []
+    },
+    {
+      "id": "unit_test",
+      "name": "Unit Tests",
+      "type": "unit_test",
+      "owner": "qa-team",
+      "continue_on_failure": true,
+      "depends_on": ["build"]
+    },
+    {
+      "id": "integration_test",
+      "name": "Integration Tests",
+      "type": "integration_test",
+      "owner": "qa-team",
+      "skippable": true,
+      "depends_on": ["unit_test"]
+    },
+    {
+      "id": "security_scan",
+      "name": "Security Scan",
+      "type": "security_scan",
+      "owner": "security-team",
+      "depends_on": ["build"]
+    },
+    {
+      "id": "approval",
+      "name": "Release Approval",
+      "type": "approval",
+      "owner": "release-manager",
+      "depends_on": ["integration_test", "security_scan"]
+    },
+    {
+      "id": "deploy_production",
+      "name": "Deploy to Production",
+      "type": "deploy_production",
+      "owner": "platform-team",
+      "depends_on": ["approval"]
+    }
+  ],
+  "metadata": {
+    "blast_radius": "low",
+    "dependencies_changed": false
+  }
+}

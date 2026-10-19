@@ -1,0 +1,36 @@
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    port: 3000,
+    proxy: {
+      "/workflows": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
+      "/reports": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
+      "/policy": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
+      "/audit": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
+      "/health": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
+      "/assessments": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
+    },
+  },
+});

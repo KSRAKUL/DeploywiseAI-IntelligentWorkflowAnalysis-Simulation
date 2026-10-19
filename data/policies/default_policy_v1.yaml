@@ -1,0 +1,21 @@
+category_weights:
+  security:    0.25
+  testing:     0.25
+  recovery:    0.20
+  dependency:  0.15
+  governance:  0.15
+
+severity_points:
+  critical: 50
+  high:     30
+  medium:   15
+  low:       5
+
+category_cap: 100
+
+verdict_thresholds:
+  high_risk: 60
+  review:    30
+
+policy_version: "1.0.0"
+rule_set_version: "1.0.0"

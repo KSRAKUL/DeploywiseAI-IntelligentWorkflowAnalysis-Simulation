@@ -1,0 +1,75 @@
+{
+  "name": "Improved Release — Safe Workflow",
+  "schema_version": "1.0",
+  "environment": "production",
+  "change_type": "standard",
+  "stages": [
+    {
+      "id": "build",
+      "name": "Build",
+      "type": "build",
+      "owner": "platform-team",
+      "depends_on": []
+    },
+    {
+      "id": "unit_test",
+      "name": "Unit Tests",
+      "type": "unit_test",
+      "owner": "qa-team",
+      "depends_on": ["build"]
+    },
+    {
+      "id": "security_scan",
+      "name": "Security Scan",
+      "type": "security_scan",
+      "owner": "security-team",
+      "depends_on": ["build"]
+    },
+    {
+      "id": "staging_deploy",
+      "name": "Deploy to Staging",
+      "type": "staging_deploy",
+      "owner": "platform-team",
+      "depends_on": ["unit_test", "security_scan"]
+    },
+    {
+      "id": "staging_validation",
+      "name": "Staging Validation",
+      "type": "staging_validation",
+      "owner": "qa-team",
+      "depends_on": ["staging_deploy"]
+    },
+    {
+      "id": "approval",
+      "name": "Release Approval",
+      "type": "approval",
+      "owner": "release-manager",
+      "depends_on": ["staging_validation"]
+    },
+    {
+      "id": "rollback_plan",
+      "name": "Rollback Plan",
+      "type": "rollback_plan",
+      "owner": "platform-team",
+      "depends_on": ["approval"]
+    },
+    {
+      "id": "deploy_production",
+      "name": "Deploy to Production",
+      "type": "deploy_production",
+      "owner": "platform-team",
+      "depends_on": ["rollback_plan"]
+    },
+    {
+      "id": "monitoring_check",
+      "name": "Post-Deploy Monitoring",
+      "type": "monitoring_check",
+      "owner": "ops-team",
+      "depends_on": ["deploy_production"]
+    }
+  ],
+  "metadata": {
+    "blast_radius": "medium",
+    "dependencies_changed": false
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "Bad Release — Missing Safety Gates",
+  "schema_version": "1.0",
+  "environment": "production",
+  "change_type": "standard",
+  "stages": [
+    {
+      "id": "build",
+      "name": "Build",
+      "type": "build",
+      "owner": "platform-team",
+      "depends_on": []
+    },
+    {
+      "id": "deploy_production",
+      "name": "Deploy to Production",
+      "type": "deploy_production",
+      "owner": null,
+      "depends_on": ["build"]
+    }
+  ],
+  "metadata": {
+    "blast_radius": "high",
+    "dependencies_changed": false
+  }
+}
